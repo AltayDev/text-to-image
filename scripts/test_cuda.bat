@@ -2,7 +2,8 @@
 echo === GPU Compatibility and CUDA Test ===
 echo This will test your setup for AI training compatibility
 
-python src/utils/cuda_test.py > cuda_test_results.txt
+set PYTHONIOENCODING=utf-8
+python ..\src\utils\cuda_test.py > cuda_test_results.txt
 
 echo.
 echo Test results have been saved to cuda_test_results.txt

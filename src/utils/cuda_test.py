@@ -23,7 +23,7 @@ def main():
     # Check for CUDA availability
     print_section_header("CUDA AVAILABILITY")
     if torch.cuda.is_available():
-        print("✅ CUDA is available!")
+        print("[PASS] CUDA is available!")
         print(f"CUDA Version: {torch.version.cuda}")
 
         # Get device count and names
@@ -50,7 +50,7 @@ def main():
             except Exception as e:
                 print(f"  Error getting memory info: {e}")
     else:
-        print("❌ CUDA is NOT available!")
+        print("[FAIL] CUDA is NOT available!")
         print("Please check your PyTorch installation or GPU drivers.")
         return
 
@@ -114,10 +114,10 @@ def main():
         torch.cuda.synchronize()
         print(f"   Time for backward pass: {start.elapsed_time(end):.2f} ms")
 
-        print("\n✅ Basic neural network test PASSED!")
+        print("\n[PASS] Basic neural network test PASSED!")
 
     except Exception as e:
-        print(f"\n❌ Performance test failed with error: {e}")
+        print(f"\n[FAIL] Performance test failed with error: {e}")
 
     # Check for specific optimizations
     print_section_header("OPTIMIZATION AVAILABILITY")
@@ -126,14 +126,16 @@ def main():
     try:
         print("\nChecking for cuDNN...")
         if torch.backends.cudnn.is_available():
-            print(f"✅ cuDNN is available (version: {torch.backends.cudnn.version()})")
+            print(
+                f"[PASS] cuDNN is available (version: {torch.backends.cudnn.version()})"
+            )
             print(f"   cuDNN enabled: {torch.backends.cudnn.enabled}")
             print(f"   cuDNN benchmark mode: {torch.backends.cudnn.benchmark}")
             print(f"   cuDNN deterministic mode: {torch.backends.cudnn.deterministic}")
         else:
-            print("❌ cuDNN is NOT available!")
+            print("[FAIL] cuDNN is NOT available!")
     except Exception as e:
-        print(f"❌ Error checking cuDNN: {e}")
+        print(f"[FAIL] Error checking cuDNN: {e}")
 
     # Check for tensor cores (requires cuDNN)
     if torch.backends.cudnn.is_available():
@@ -147,10 +149,10 @@ def main():
             torch.matmul(a, b)
 
             print(
-                "✅ Half-precision operations completed successfully (Tensor Cores should work if your GPU supports them)"
+                "[PASS] Half-precision operations completed successfully (Tensor Cores should work if your GPU supports them)"
             )
         except Exception as e:
-            print(f"❌ Error running half-precision operations: {e}")
+            print(f"[FAIL] Error running half-precision operations: {e}")
 
     # Check for xformers
     try:
@@ -158,22 +160,22 @@ def main():
         import xformers
         import xformers.ops
 
-        print(f"✅ xformers is available (version: {xformers.__version__})")
+        print(f"[PASS] xformers is available (version: {xformers.__version__})")
     except ImportError:
-        print("❌ xformers is NOT installed")
+        print("[INFO] xformers is NOT installed")
     except Exception as e:
-        print(f"❌ Error checking xformers: {e}")
+        print(f"[FAIL] Error checking xformers: {e}")
 
     # Check for bitsandbytes (for 8-bit optimizers)
     try:
         print("\nChecking for bitsandbytes (8-bit optimization)...")
         import bitsandbytes as bnb
 
-        print(f"✅ bitsandbytes is available (version: {bnb.__version__})")
+        print(f"[PASS] bitsandbytes is available (version: {bnb.__version__})")
     except ImportError:
-        print("❌ bitsandbytes is NOT installed")
+        print("[INFO] bitsandbytes is NOT installed")
     except Exception as e:
-        print(f"❌ Error checking bitsandbytes: {e}")
+        print(f"[FAIL] Error checking bitsandbytes: {e}")
 
     # Final summary and recommendations
     print_section_header("SUMMARY AND RECOMMENDATIONS")
@@ -187,7 +189,7 @@ def main():
 
             # Recommendations based on memory
             if total_memory < 6:
-                print("\n⚠️ LIMITED MEMORY DETECTED - RECOMMENDATIONS:")
+                print("\n[WARNING] LIMITED MEMORY DETECTED - RECOMMENDATIONS:")
                 print("- Use smaller batch sizes (--train_batch_size=1)")
                 print(
                     "- Increase gradient accumulation (--gradient_accumulation_steps=8)"
@@ -195,12 +197,12 @@ def main():
                 print("- Use 8-bit Adam optimizer (--use_8bit_adam)")
                 print("- Reduce LoRA rank to 4 or 8 (--lora_rank=4)")
             elif total_memory < 12:
-                print("\n⚠️ MEDIUM MEMORY DETECTED - RECOMMENDATIONS:")
+                print("\n[WARNING] MEDIUM MEMORY DETECTED - RECOMMENDATIONS:")
                 print("- Use moderate batch sizes (--train_batch_size=2)")
                 print("- Use gradient accumulation (--gradient_accumulation_steps=4)")
                 print("- Use 8-bit Adam optimizer (--use_8bit_adam)")
             else:
-                print("\n✅ SUFFICIENT MEMORY DETECTED - RECOMMENDATIONS:")
+                print("\n[PASS] SUFFICIENT MEMORY DETECTED - RECOMMENDATIONS:")
                 print("- Use larger batch sizes (--train_batch_size=4 or higher)")
                 print(
                     "- Use moderate gradient accumulation (--gradient_accumulation_steps=2)"

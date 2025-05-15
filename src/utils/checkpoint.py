@@ -1,7 +1,7 @@
 import os
 import torch
 from diffusers import StableDiffusionPipeline, UNet2DConditionModel
-from utils.logging import log_message
+from utils.logger import log_message
 
 
 def save_checkpoint(accelerator, unet, global_step, output_dir, log_file):

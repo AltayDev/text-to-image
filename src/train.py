@@ -5,7 +5,7 @@ import random
 import json
 from datetime import datetime
 from utils.dataset import CustomDataset
-from utils.logging import log_message
+from utils.logger import log_message
 from utils.vae import encode_vae
 from models.stable_diffusion import setup_pipeline, prepare_unet_lora
 

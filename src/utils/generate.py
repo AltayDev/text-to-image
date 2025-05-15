@@ -1,6 +1,6 @@
 import os
 import torch
-from utils.logging import log_message
+from utils.logger import log_message
 
 
 def generate_samples(
