@@ -18,8 +18,8 @@ if "%OUTPUT%"=="" (
 echo.
 echo Checking for fine-tuned model...
 
-python src/generate.py ^
-  --config="config/default_config.json" ^
+python ..\src\generate.py ^
+  --config="..\config\default_config.json" ^
   --prompt="%PROMPT%" ^
   --output_file="%OUTPUT%"
 

@@ -6,3 +6,5 @@
 /default_config.json
 /test_config.json
 /scripts/cuda_test_results.txt
+/scripts/test_generated.png
+/samples/
